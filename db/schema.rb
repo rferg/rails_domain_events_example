@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_23_161145) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_23_162944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_23_161145) do
     t.index ["user_id"], name: "index_forum_posts_on_user_id"
   end
 
+  create_table "notification_contents", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notification_instances", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "notification_content_id", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notification_content_id"], name: "index_notification_instances_on_notification_content_id"
+    t.index ["user_id"], name: "index_notification_instances_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", null: false
@@ -46,4 +63,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_23_161145) do
   add_foreign_key "forum_comments", "forum_posts"
   add_foreign_key "forum_comments", "users"
   add_foreign_key "forum_posts", "users"
+  add_foreign_key "notification_instances", "notification_contents"
+  add_foreign_key "notification_instances", "users"
 end
