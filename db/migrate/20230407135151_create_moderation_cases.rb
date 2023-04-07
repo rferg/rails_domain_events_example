@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateModerationCases < ActiveRecord::Migration[7.0]
   def change
     create_table :moderation_cases do |t|
