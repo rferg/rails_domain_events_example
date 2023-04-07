@@ -11,9 +11,9 @@
 
 ### Considerations for code
 
-- Is it clear what is a side effect and what is the main operation?
+- These are often the cause of module breakdowns and unnecessary coupling because disparate app segments have to interact.
 - Does side effect code actually respect module boundaries or violate them?
-- Should side effect code be in the same transaction or not?
+- Should side effect code be in the same transaction or not? (Usually no)
 - Should side effect code be async?
 - Is the control flow easy to follow?
 

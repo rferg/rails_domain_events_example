@@ -12,5 +12,6 @@ module Notification
   end
 end
 
-# This is a domain event handler.  It runs some code in response to an event.
+# This is a domain event handler.
+# It runs some code in response to an event.
 # There is a one-many relationship between events and handlers.
