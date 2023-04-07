@@ -3,6 +3,8 @@
 module Forum
   module Events
     class HideContentOnUserBanned < Event::ApplicationEventHandler
+      # on: :before_commit means that this code will run in the same
+      # transaction as the original operation(s) that triggered the event.
       handles ::Events::UserBanned, on: :before_commit
 
       def handle(event)

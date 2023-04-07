@@ -10,3 +10,6 @@ module Events
     end
   end
 end
+
+# This is a domain event: an explicit representation of something that happened.
+# [go back to user.rb to see how these are used in models]
