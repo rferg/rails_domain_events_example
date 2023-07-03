@@ -2,6 +2,7 @@
 
 module Event
   module Emitter
+    include ::Event::Constants
     extend ActiveSupport::Concern
 
     included do
@@ -21,11 +22,11 @@ module Event
     end
 
     def publish_events_before_commit
-      publish_events(Constants::Stages::BEFORE_COMMIT)
+      publish_events(Stages::BEFORE_COMMIT)
     end
 
     def publish_events_after_commit
-      publish_events(Constants::Stages::AFTER_COMMIT)
+      publish_events(Stages::AFTER_COMMIT)
     end
 
     def publish_events(stage)
@@ -35,7 +36,7 @@ module Event
         event = events.find { |e| e&.unpublished?(stage) }
         break if event.blank?
 
-        Publisher.publish(event, stage)
+        ::Event::Publisher.publish(event, stage)
       end
     end
   end
