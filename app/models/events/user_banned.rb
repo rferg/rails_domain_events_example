@@ -2,10 +2,10 @@
 
 module Events
   class UserBanned < Event::ApplicationEvent
-    attr_reader :user
+    attr_reader :user_id
 
-    def initialize(user)
-      @user = user
+    def initialize(user_id)
+      @user_id = user_id
       super
     end
   end

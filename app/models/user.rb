@@ -7,24 +7,18 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy, class_name: 'Forum::Post'
   has_many :comments, dependent: :destroy, class_name: 'Forum::Comment'
-  has_many :notifications, dependent: :destroy, class_name: 'Notification::Instance'
-  has_many :cases, dependent: :destroy, class_name: 'Moderation::Case'
 
   validates :email, presence: true, uniqueness: true
 
   def ban!
     return true if banned?
 
-    add_event(Events::UserBanned.new(self))
+    add_event(Events::UserBanned.new(id))
     banned!
   end
 
   def ban_with_no_event!
-    User.transaction do
-      banned!
-      posts.update!(status: :inactive)
-      comments.update!(status: :inactive)
-    end
+    banned!
   end
 
   # Putting side effects here makes this model dependent on other models
@@ -36,10 +30,8 @@ class User < ApplicationRecord
 
     User.transaction do
       banned!
-      posts.update!(status: :inactive)
-      comments.update!(status: :inactive)
+      Moderation::Case.create_user_banned!(id)
     end
-    Notification::Content.create_for_user!(self, title: 'Banned', body: "You've been banned")
-    Moderation::Case.create_user_banned!(self)
+    Notification::Content.create_for_user!(id, title: 'Banned', body: "You've been banned")
   end
 end

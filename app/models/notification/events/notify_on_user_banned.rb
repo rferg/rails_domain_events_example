@@ -6,7 +6,7 @@ module Notification
       handles ::Events::UserBanned
 
       def handle(event)
-        Content.create_for_user!(event.user, title: 'Banned', body: "You've been banned.")
+        Content.create_for_user!(event.user_id, title: 'Banned', body: "You've been banned.")
       end
     end
   end

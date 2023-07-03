@@ -18,8 +18,8 @@ module Moderation
 
     validates :category, inclusion: { in: Categories::ALL }
 
-    def self.create_user_banned!(user)
-      create!(user:, category: Categories::BAN)
+    def self.create_user_banned!(user_id)
+      create!(user_id:, category: Categories::BAN)
     end
   end
 end
