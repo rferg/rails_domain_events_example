@@ -28,7 +28,7 @@ class User < ApplicationRecord
   def ball_of_mud_ban!
     return true if banned?
 
-    User.transaction do
+    transaction do
       banned!
       Moderation::Case.create_user_banned!(id)
     end
